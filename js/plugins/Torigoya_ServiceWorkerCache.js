@@ -35,6 +35,7 @@
     })();
 
     //-----------------------------------------------------------------------------
+    var rootPath = window.location.pathname.replace(/(\/www|)\/[^\/]*$/, '');
 
     ServiceWorkerCache.canUse = function () {
         return (!StorageManager.isLocalMode() && 'serviceWorker' in navigator);
@@ -43,8 +44,8 @@
     ServiceWorkerCache.install = function () {
         if (this.canUse()) {
             return navigator.serviceWorker.register(
-                '../../' + ServiceWorkerCache.settings.swFileName,
-                {scope: '../../'}
+                rootPath + '/' + ServiceWorkerCache.settings.swFileName,
+                {scope: rootPath + '/'}
             ).then(function (_result) {
                 return true;
             }).catch(function (e) {
@@ -88,7 +89,6 @@
         var fs = require('fs');
         var path = require('path');
         var crypto = require('crypto');
-        var rootPath = window.location.pathname.replace(/(\/www|)\/[^\/]*$/, '');
 
         var directories = [
             '/audio',
